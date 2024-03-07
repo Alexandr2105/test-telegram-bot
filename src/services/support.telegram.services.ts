@@ -10,6 +10,7 @@ export class SupportTelegramServices {
         await this.telegramAdapter.sendPhoto(this.picture, chatId);
         this.timerId = setTimeout(async () => {
             await this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
+            return true;
         }, 15000);
     }
 
@@ -47,7 +48,7 @@ export class SupportTelegramServices {
             setTimeout(async () => {
                 await this.telegramAdapter.sendMessage("Спасибо", chatId);
                 await this.telegramAdapter.sendPhoto(this.picture, chatId);
-                return
+                return true;
             }, 10000);
         }, 15000);
     }
