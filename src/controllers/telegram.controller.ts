@@ -7,9 +7,7 @@ export class TelegramController {
 
     async telegramHook(req: Request, res: Response): Promise<any> {
         const data: TelegramMessageType = req.body;
-        console.log(req.body)
         await this.handleTelegramUpdateServices.sendMessage(data);
-        console.log("END")
         res.send(true);
     }
 }

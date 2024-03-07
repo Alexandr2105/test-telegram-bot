@@ -1,5 +1,5 @@
-import {TelegramMessageType} from "../types/telegram.message.type";
 import {SupportTelegramServices} from "./support.telegram.services";
+import {TelegramMessageType} from "../types/telegram.message.type";
 
 export class HandleTelegramUpdateServices {
     private supportTelegramServices = new SupportTelegramServices();
@@ -31,7 +31,6 @@ export class HandleTelegramUpdateServices {
                     await this.supportTelegramServices.defaultService(chatId);
             }
         } catch (e) {
-            console.log(data)
         }
     }
 }
