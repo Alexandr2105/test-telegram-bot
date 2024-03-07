@@ -5,28 +5,33 @@ export class HandleTelegramUpdateServices {
     private supportTelegramServices = new SupportTelegramServices();
 
     async sendMessage(data: TelegramMessageType) {
-        if (data?.message) {
+        try {
             const chatId = data.message.chat.id;
             const message = data.message.text;
 
             switch (message) {
                 case "/start":
-                    return await this.supportTelegramServices.startService(data.message.from.first_name, chatId);
+                    await this.supportTelegramServices.startService(data.message.from.first_name, chatId);
+                    break;
                 case "Привет":
-                    return this.supportTelegramServices.privetService(chatId);
+                    await this.supportTelegramServices.privetService(chatId);
+                    break;
                 case "Выбрать тариф":
-                    return this.supportTelegramServices.selectPlansService(chatId);
+                    await this.supportTelegramServices.selectPlansService(chatId);
+                    break;
                 case "Базовый":
                 case "Продвинутый":
                 case "Pro":
-                    return this.supportTelegramServices.plansKeyboardService(chatId);
+                    await this.supportTelegramServices.plansKeyboardService(chatId);
+                    break;
                 case "Попробовать бесплатно":
-                    return this.supportTelegramServices.selectFreePlanService(chatId);
+                    await this.supportTelegramServices.selectFreePlanService(chatId);
+                    break;
                 default:
-                    return this.supportTelegramServices.defaultService(chatId);
+                    await this.supportTelegramServices.defaultService(chatId);
             }
-        } else {
-            console.log("Error")
+        } catch (e) {
+            console.log(data)
         }
     }
 }

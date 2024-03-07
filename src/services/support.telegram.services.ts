@@ -3,15 +3,14 @@ import {TelegramAdapter} from "../adapters/telegramAdapter/telegram.adapter";
 export class SupportTelegramServices {
     private telegramAdapter = new TelegramAdapter();
     private timerId?: NodeJS.Timeout;
-    private picture = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/800px-SNice.svg.png";
+    private photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/800px-SNice.svg.png";
 
     async startService(firstName: string, chatId: number) {
-        await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
-        await this.telegramAdapter.sendPhoto(this.picture, chatId);
-        this.timerId = setTimeout(async () => {
-            await this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
-            return true;
-        }, 7000);
+        // await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
+        // await this.telegramAdapter.sendPhoto(this.photo, chatId);
+        this.timerId = setTimeout(() => {
+            this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
+        }, 15000);
     }
 
     async privetService(chatId: number) {
@@ -47,18 +46,16 @@ export class SupportTelegramServices {
             await this.telegramAdapter.sendMessage(`Тариф активирован`, chatId);
             setTimeout(async () => {
                 await this.telegramAdapter.sendMessage("Спасибо", chatId);
-                await this.telegramAdapter.sendPhoto(this.picture, chatId);
-                return true;
-            }, 4000);
-        }, 7000);
+                await this.telegramAdapter.sendPhoto(this.photo, chatId);
+            }, 10000);
+        }, 15000);
     }
 
     async selectFreePlanService(chatId: number) {
         setTimeout(async () => {
             await this.telegramAdapter.sendMessage("Спасибо", chatId);
-            await this.telegramAdapter.sendPhoto(this.picture, chatId);
-            return
-        }, 7000);
+            await this.telegramAdapter.sendPhoto(this.photo, chatId);
+        }, 15000);
     }
 
     async defaultService(chatId: number) {
