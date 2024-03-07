@@ -11,26 +11,21 @@ export class HandleTelegramUpdateServices {
 
             switch (message) {
                 case "/start":
-                    await this.supportTelegramServices.startService(data.message.from.first_name, chatId);
-                    break;
+                    return this.supportTelegramServices.startService(data.message.from.first_name, chatId);
                 case "Привет":
-                    await this.supportTelegramServices.privetService(chatId);
-                    break;
+                    return this.supportTelegramServices.privetService(chatId);
                 case "Выбрать тариф":
-                    await this.supportTelegramServices.selectPlansService(chatId);
-                    break;
+                    return this.supportTelegramServices.selectPlansService(chatId);
                 case "Базовый":
                 case "Продвинутый":
                 case "Pro":
-                    await this.supportTelegramServices.plansKeyboardService(chatId);
-                    break;
+                    return this.supportTelegramServices.plansKeyboardService(chatId);
                 case "Попробовать бесплатно":
-                    await this.supportTelegramServices.selectFreePlanService(chatId);
-                    break;
+                    return this.supportTelegramServices.selectFreePlanService(chatId);
                 default:
-                    await this.supportTelegramServices.defaultService(chatId);
+                    return this.supportTelegramServices.defaultService(chatId);
             }
-        }else {
+        } else {
             console.log("Error")
         }
     }
