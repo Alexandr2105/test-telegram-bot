@@ -8,9 +8,10 @@ export class SupportTelegramServices {
     async startService(firstName: string, chatId: number) {
         await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
         await this.telegramAdapter.sendPhoto(this.picture, chatId);
-        this.timerId = setTimeout(() => {
-            this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
-        }, 7000);
+        this.timerId = setTimeout(async () => {
+            await this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
+            return
+        }, 15000);
     }
 
     async privetService(chatId: number) {
@@ -47,15 +48,17 @@ export class SupportTelegramServices {
             setTimeout(async () => {
                 await this.telegramAdapter.sendMessage("Спасибо", chatId);
                 await this.telegramAdapter.sendPhoto(this.picture, chatId);
-            }, 5000);
-        }, 7000);
+                return
+            }, 10000);
+        }, 15000);
     }
 
     async selectFreePlanService(chatId: number) {
         setTimeout(async () => {
             await this.telegramAdapter.sendMessage("Спасибо", chatId);
             await this.telegramAdapter.sendPhoto(this.picture, chatId);
-        }, 7000);
+            return
+        }, 15000);
     }
 
     async defaultService(chatId: number) {
