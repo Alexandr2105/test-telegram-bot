@@ -11,7 +11,7 @@ export class HandleTelegramUpdateServices {
 
             switch (message) {
                 case "/start":
-                    return this.supportTelegramServices.startService(data.message.from.first_name, chatId);
+                    return await this.supportTelegramServices.startService(data.message.from.first_name, chatId);
                 case "Привет":
                     return this.supportTelegramServices.privetService(chatId);
                 case "Выбрать тариф":
