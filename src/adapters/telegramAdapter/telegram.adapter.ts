@@ -33,12 +33,6 @@ export class TelegramAdapter {
         });
     }
 
-    async setChatMenuButton(chatId: number) {
-        await axios.post(`https://api.telegram.org/bot${this.token}/getChatMenuButton`, {
-            chat_id: chatId,
-        })
-    }
-
     async connectToNgrok() {
         const url = await ngrok.connect({
             addr: 3000,
