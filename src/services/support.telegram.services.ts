@@ -8,9 +8,22 @@ export class SupportTelegramServices {
     async startService(firstName: string, chatId: number) {
         // await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
         // await this.telegramAdapter.sendPhoto(this.photo, chatId);
-        this.timerId = setTimeout(() => {
-            this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
-        }, 15000);
+        // this.timerId = setTimeout(() => {
+        //     this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
+        // }, 15000);
+            // Асинхронный setTimeout обернут в промис
+            const wait = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout));
+
+            await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
+            await this.telegramAdapter.sendPhoto(this.photo, chatId);
+
+            // Дожидаемся завершения setTimeout
+            await Promise.race([
+                wait(15000),
+                new Promise((_, reject) => this.timerId = setTimeout(() => reject(new Error('Timeout')), 15000))
+            ]);
+
+            await this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
     }
 
     async privetService(chatId: number) {
