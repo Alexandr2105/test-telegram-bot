@@ -7,4 +7,5 @@ export const settings = {
     NGROK_AUTH_TOKEN: process.env.AUTH_TOKEN_FOR_NGROK,
     CURRENT_APP_BASE_URL: process.env.CURRENT_APP_BASE_URL,
     LOCAL_ADDRESS: "https://localhost:3000",
+    RABBIT_MQ: "amqps://pgkvdboe:3_XbKS_zbq3miRxBQW7_uLrJTh75VPZU@whale.rmq.cloudamqp.com/pgkvdboe",
 }

@@ -1,13 +1,14 @@
 import {Request, Response} from "express";
 import {TelegramMessageType} from "../types/telegram.message.type";
-import {HandleTelegramUpdateServices} from "../services/handle.telegram.update.services";
+import {RabbitMQAdapter} from "../adapters/rabbitMQAdapter/rabbitMQ.adapter";
 
 export class TelegramController {
-    handleTelegramUpdateServices = new HandleTelegramUpdateServices();
+    private rabbitMQAdapter = new RabbitMQAdapter();
 
     async telegramHook(req: Request, res: Response): Promise<any> {
         const data: TelegramMessageType = req.body;
-        await this.handleTelegramUpdateServices.sendMessage(data);
+        const {channel, queue} = await this.rabbitMQAdapter.connectToRabbitMQ();
+        channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)));
         res.send(true);
     }
 }
