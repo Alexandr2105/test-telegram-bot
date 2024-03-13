@@ -4,7 +4,7 @@ import {HandleTelegramUpdateServices} from "./services/handle.telegram.update.se
 import {TelegramMessageType} from "./types/telegram.message.type";
 import {RabbitMQAdapter} from "./adapters/rabbitMQAdapter/rabbitMQ.adapter";
 
-const app = express();
+export const app = express();
 // const port = settings.PORT;
 
 app.use(express.json());
