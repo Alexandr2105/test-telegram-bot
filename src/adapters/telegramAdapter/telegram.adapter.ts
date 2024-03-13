@@ -1,6 +1,5 @@
 import axios from "axios";
 import {settings} from "../../settings";
-import ngrok from "ngrok";
 
 export class TelegramAdapter {
     private token = settings.TELEGRAM_TOKEN;
@@ -27,18 +26,18 @@ export class TelegramAdapter {
         })
     }
 
-    async sendOurHookForTelegram(url: string) {
-        await axios.post(`https://api.telegram.org/bot${this.token}/setWebhook`, {
-            url,
-        });
-    }
-
-    async connectToNgrok() {
-        const url = await ngrok.connect({
-            addr: 3000,
-            authtoken: settings.NGROK_AUTH_TOKEN,
-        });
-        console.log(url);
-        return url;
-    }
+    // async sendOurHookForTelegram(url: string) {
+    //     await axios.post(`https://api.telegram.org/bot${this.token}/setWebhook`, {
+    //         url,
+    //     });
+    // }
+    //
+    // async connectToNgrok() {
+    //     const url = await ngrok.connect({
+    //         addr: 3000,
+    //         authtoken: settings.NGROK_AUTH_TOKEN,
+    //     });
+    //     console.log(url);
+    //     return url;
+    // }
 }

@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "watch": "tsc -w",
-    "dev": "nodemon --inspect dist/index.js",
+    "dev": "nodemon dist/index.js",
     "build": "tsc",
     "start": "node dist/index.js",
     "ngrok:dev": "ngrok http 3000"
