@@ -5,7 +5,7 @@ import {TelegramMessageType} from "./types/telegram.message.type";
 import {RabbitMQAdapter} from "./adapters/rabbitMQAdapter/rabbitMQ.adapter";
 
 const app = express();
-// const port = settings.PORT;
+const port = settings.PORT;
 
 app.use(express.json());
 
@@ -13,9 +13,9 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
 
-// app.listen(port, () => {
-//     console.log(`Example app listening on port ${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+});
 
 const consumeMessages = async () => {
     console.log(1)
