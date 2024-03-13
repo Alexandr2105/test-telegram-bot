@@ -22,9 +22,9 @@ const consumeMessages = async () => {
     const handleTelegramUpdateServices = new HandleTelegramUpdateServices();
     const {channel, queue} = await rabbitMQAdapter.connectToRabbitMQ();
 
-    await channel.consume(queue, (msg: any) => {
+    await channel.consume(queue, async (msg: any) => {
         const data: TelegramMessageType = JSON.parse(msg.content.toString());
-        handleTelegramUpdateServices.sendMessage(data);
+        await handleTelegramUpdateServices.sendMessage(data);
         channel.ack(msg);
     });
 };
