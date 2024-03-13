@@ -18,12 +18,14 @@ app.listen(port, () => {
 });
 
 const consumeMessages = async () => {
+    console.log(1)
     const rabbitMQAdapter = new RabbitMQAdapter();
     const handleTelegramUpdateServices = new HandleTelegramUpdateServices();
     const {channel, queue} = await rabbitMQAdapter.connectToRabbitMQ();
 
     await channel.consume(queue, async (msg: any) => {
         const data: TelegramMessageType = JSON.parse(msg.content.toString());
+        console.log(data)
         await handleTelegramUpdateServices.sendMessage(data);
         channel.ack(msg);
     });
