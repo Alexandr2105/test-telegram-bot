@@ -6,10 +6,17 @@ export class SupportTelegramServices {
     private photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/800px-SNice.svg.png";
 
     async startService(firstName: string, chatId: number) {
-        await this.telegramAdapter.sendMessage(`Привет ${firstName}!`, chatId);
+        const replyMarkup = {
+            keyboard: [
+                [{text: 'Сколько время?'}, {text: 'Привет'}],
+            ],
+            one_time_keyboard: true,
+            resize_keyboard: true,
+        };
+        await this.telegramAdapter.sendMessageForButton(chatId, replyMarkup, `Привет ${firstName}!`);
         await this.telegramAdapter.sendPhoto(this.photo, chatId);
         this.timerId = setTimeout(() => {
-            this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет"`, chatId);
+            this.telegramAdapter.sendMessage(`Если хочешь продолжить напиши "Привет" или нажми "Привет"`, chatId);
         }, 15000);
     }
 
@@ -17,24 +24,21 @@ export class SupportTelegramServices {
         clearTimeout(this.timerId);
         const text = "Вибери одно из действий:"
         const replyMarkup = {
-            keyboard: [
-                [{text: 'Выбрать тариф'}, {text: 'Попробовать бесплатно'}],
+            inline_keyboard: [
+                [{text: 'Выбрать тариф', callback_data: 'Выбрать тариф'}],
+                [{text: 'Попробовать бесплатно', callback_data: 'Попробовать бесплатно'}],
             ],
-            one_time_keyboard: true,
-            resize_keyboard: true,
         };
         await this.telegramAdapter.sendMessageForButton(chatId, replyMarkup, text);
     }
 
     async selectPlansService(chatId: number) {
-        const text = "Тарифы"
+        const text = "Тарифы:"
         const replyMarkup = {
-            keyboard: [
-                [{text: "Продвинутый"}, {text: "Pro"}],
-                [{text: "Базовый"},]
+            inline_keyboard: [
+                [{text: "Продвинутый", callback_data: 'Продвинутый'}, {text: "Pro", callback_data: 'Pro'}],
+                [{text: "Базовый", callback_data: 'Базовый'},]
             ],
-            one_time_keyboard: true,
-            resize_keyboard: true,
         };
         await this.telegramAdapter.sendMessageForButton(chatId, replyMarkup, text)
     }
@@ -56,6 +60,23 @@ export class SupportTelegramServices {
             await this.telegramAdapter.sendMessage("Спасибо", chatId);
             await this.telegramAdapter.sendPhoto(this.photo, chatId);
         }, 15000);
+    }
+
+    async howMuchTime(chatId: number) {
+        const date = new Date();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        await this.telegramAdapter.sendMessage(
+            `${hours}:${minutes}:${seconds}`,
+            chatId,
+        );
+    }
+
+    async updateCallbackButton(chatId: number, messageId: number, text: string) {
+        const messageResult = `Вы выбрали: ${text}`;
+        await this.telegramAdapter.sendEditMessageReplyMarkup(chatId, messageId);
+        await this.telegramAdapter.sendMessage(messageResult, chatId);
     }
 
     async defaultService(chatId: number) {

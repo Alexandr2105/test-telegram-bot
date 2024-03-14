@@ -1,7 +1,6 @@
 import express, {Request, Response} from "express";
 import {settings} from "./settings";
 import {HandleTelegramUpdateServices} from "./services/handle.telegram.update.services";
-import {TelegramMessageType} from "./types/telegram.message.type";
 import {RabbitMQAdapter} from "./adapters/rabbitMQAdapter/rabbitMQ.adapter";
 
 const app = express();
@@ -23,7 +22,7 @@ const consumeMessages = async () => {
 
     const {channel, queue} = await rabbitMQAdapter.connectToRabbitMQ();
     await channel.consume(queue, async (msg: any) => {
-        const data: TelegramMessageType = JSON.parse(msg.content.toString());
+        const data = JSON.parse(msg.content.toString());
         await handleTelegramUpdateServices.sendMessage(data);
         channel.ack(msg);
     });

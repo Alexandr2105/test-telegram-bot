@@ -26,6 +26,14 @@ export class TelegramAdapter {
         })
     }
 
+    async sendEditMessageReplyMarkup(chatId: number, messageId: number) {
+        await axios.post(`https://api.telegram.org/bot${this.token}/editMessageReplyMarkup`, {
+            chat_id: chatId,
+            message_id: messageId,
+            // reply_markup: {inline_keyboard: []} // Пустой массив кнопок для удаления
+        });
+    }
+
     // async sendOurHookForTelegram(url: string) {
     //     await axios.post(`https://api.telegram.org/bot${this.token}/setWebhook`, {
     //         url,
